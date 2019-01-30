@@ -1,0 +1,22 @@
+package base.Utility;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+
+/* The purpose of this class is to create a utility that can enable QA to test different endpoints
+ * using different CRUD requests using this WebUtility */
+public class WebUtility {
+
+	public WebUtility(String url, String verb) throws MalformedURLException, IOException {
+		HttpURLConnection httpClient = (HttpURLConnection) 
+                URI.create(
+                    new StringBuilder(_url)
+                .toString())
+                .toURL()
+                .openConnection();
+		httpClient.setRequestMethod("GET");
+	}
+	
+}

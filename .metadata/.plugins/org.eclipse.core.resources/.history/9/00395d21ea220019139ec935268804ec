@@ -1,0 +1,37 @@
+package base;
+import java.util.Dictionary;
+import java.util.Map;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import base.model.CustomWebResponseModel;
+
+/* The purpose of this class is to provide a utility that can provide functionality that 
+ * can test CRUD endpoints with services you maybe working on. Authentication may need to be added
+ * eventually */
+public class WebClientUtility {
+
+		//public CustomWebResponseModel _customWebResponseModel;
+		CloseableHttpClient client = HttpClients.createDefault();
+		HttpGet request = new HttpGet("http://localhost/httpclient/letsstart.php");
+		CloseableHttpResponse response = null;
+		
+        response = client.execute(request);
+
+        int status = response.getStatusLine().getStatusCode();
+
+
+	
+		}	
+		
+		
+		/* This helper method was created to be able to just rely on getting the HttpResponse from the 
+		 * get request. Feel free to recreate another method and overload it with other parameters you 
+		 * feel you may need
+		 * */
+

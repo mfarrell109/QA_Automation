@@ -1,0 +1,92 @@
+package api;
+
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import org.testng.collections.Objects;
+
+import com.google.gson.Gson;
+
+import base.Utility.DeserializeUtility;
+import base.Utility.WebUtility;
+import base.model.DataModel;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+
+public class ApiTesting 
+{	
+	private String _url = "http://localhost:9000/json/mockData.json";
+	private WebUtility _webUtility = new WebUtility();
+	private HttpURLConnection _httpClient;
+	private DeserializeUtility deserializeUtility = new DeserializeUtility();
+	
+	@BeforeTest
+	public void beforetest() {
+		
+	}
+	
+	/* Validating the right amount of records exist using a generic deserialization utility helper*/
+	@Test
+	public void ValidateGenericModelCountIsCorrect() throws MalformedURLException, IOException  {
+		
+		_httpClient = _webUtility.WebClient(_url, "GET");
+		int statusCode = _httpClient.getResponseCode();
+		
+		assertTrue(statusCode == 200);
+		
+		InputStream response=  _httpClient.getInputStream();
+		DataModel dataModel = new DataModel();		
+		Object[] object =  (Object[]) deserializeUtility.DeserializeManyJsonToModel(response, dataModel);
+		
+		int count = 0;
+		System.out.println();
+		for (Object obj : object) {
+			count++;
+		}	
+		
+		assertTrue(count == 30);
+	}
+	
+	/* Validating the right amount of records exist using a generic deserialization utility helper*/
+	@Test
+	public void ValidateApplicationDataModelIsCorrect() throws MalformedURLException, IOException  {
+		
+		_httpClient = _webUtility.WebClient(_url, "GET");
+		int statusCode = _httpClient.getResponseCode();
+		
+		assertTrue(statusCode == 200);
+		
+		InputStream response=  _httpClient.getInputStream();
+		DataModel dataModel = new DataModel();		
+		DataModel[] dataModels =  deserializeUtility.DeserializeFromDataModel(response, dataModel);
+		
+		int count = 0;
+
+		System.out.println();
+		for (DataModel dm : dataModels) {
+			if(dm.getStatus() == "Administration" && dm.getProject_owner() == "Eugene Brown"
+					&& dm.getStatus() == "new") {
+				count++;
+			}
+		}	
+		
+		System.out.println(count);
+		assertTrue(count == 30);
+	}
+
+	@AfterTest
+	public void aftertest() {
+		
+	}
+}

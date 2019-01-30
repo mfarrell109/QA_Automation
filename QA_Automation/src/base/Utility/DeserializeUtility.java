@@ -1,0 +1,60 @@
+package base.Utility;
+
+import java.io.InputStream;
+import java.util.Scanner;
+import org.testng.collections.Objects;
+import com.google.gson.Gson;
+import base.model.DataModel;
+
+	
+
+/* This class is made as a utility to help with deserialization of objects */
+public class DeserializeUtility {
+	
+	private Object Object = new Object();
+	
+	/* Deserialize from Input Stream using json just one object*/
+	public Object DeserializeOneJsonToModel(InputStream input, Object obj) 
+	{		
+		Scanner scanner = new Scanner(input);
+		StringBuilder jsonToString = new StringBuilder();
+		while (scanner.hasNext()) {
+			jsonToString.append(scanner.next());			
+		}
+				
+		String jsonDataModel = jsonToString.toString();	
+		obj = new Gson().fromJson(jsonDataModel, obj.getClass());
+		return obj;
+	}
+	
+	/* Deserialize Generic model from Input Stream using json just with multiple objects */
+	public Object[] DeserializeManyJsonToModel(InputStream input, Object model) 
+	{		
+		Scanner scanner = new Scanner(input);
+		StringBuilder jsonToString = new StringBuilder();
+		while (scanner.hasNext()) {
+			jsonToString.append(scanner.next());			
+		}			
+		
+		String jsonDataModel = jsonToString.toString();	
+		Gson gson = new Gson();
+		Object[] models = gson.fromJson(jsonDataModel, Object[].class);
+		return models;
+	}
+	
+	/* Deserialize DataModelfrom Input Stream using json just with multiple objects */
+	public DataModel[] DeserializeFromDataModel(InputStream input, DataModel model) 
+	{		
+		Scanner scanner = new Scanner(input);
+		StringBuilder jsonToString = new StringBuilder();
+		while (scanner.hasNext()) {
+			jsonToString.append(scanner.next());			
+		}			
+		
+		String jsonDataModel = jsonToString.toString();	
+		Gson gson = new Gson();
+		DataModel[] models = gson.fromJson(jsonDataModel, DataModel[].class);
+		return models;
+	}
+	
+}

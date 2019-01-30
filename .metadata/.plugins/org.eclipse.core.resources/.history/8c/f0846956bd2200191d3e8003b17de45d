@@ -1,0 +1,25 @@
+<!--  <suite name = "QA_AUtomation Suite" verbose="1">
+   <listeners>
+      <listener class-name = "base.po.AutomationListener"/>
+   </listeners>
+
+   <test name = "Selenium test">
+      <classes>
+         <class name = "base.po.ProjectDashBoard_PO_Test" />
+      </classes>
+   </test>
+</suite>
+-->
+<suite name="Time test Suite" verbose="1">
+  <test name="Group Test">
+    <groups>
+      <run>
+        <include name="Integration" />
+      </run>
+    </groups>
+    <classes>
+      <class name="com.howtodoinjava.groupExamples.TestGroupExample" />
+    </classes>
+  </test>
+</suite>
+

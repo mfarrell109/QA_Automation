@@ -1,0 +1,12 @@
+package base.model;
+
+public class ManyDataModels {
+
+	private Object Object;
+	
+	public ManyDataModels(java.lang.Object model) {
+		this.Object = model;
+	}
+
+	
+}

@@ -1,0 +1,30 @@
+package base;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.openqa.selenium.remote.http.HttpResponse;
+import org.apache.http.client.*;
+
+/* The purpose of this class is to provide a utility that can provide functionality that 
+ * can test CRUD endpoints with services you maybe working on. Authentication may need to be added
+ * eventually */
+public class WebClientUtility {
+
+		private HttpClient client;
+		private HttpGet request;
+		private String url = "";
+	
+		public WebClientUtility() 
+		{
+			client = HttpClientBuilder.create().build();
+		}
+		
+		private HttpResponse GetHttpClientResponse(String[] headers, String Url) {
+			client = HttpClientBuilder.create().build();
+			request = new HttpGet(url);
+			HttpResponse httpResponse = new HttpResponse();
+			
+			return httpResponse;
+		}
+}

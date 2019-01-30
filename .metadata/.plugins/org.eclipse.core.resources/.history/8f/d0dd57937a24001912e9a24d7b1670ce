@@ -1,0 +1,8 @@
+package base;
+
+public final class Constants {
+	public static final String DEVELOPMENT = "Development";
+	public static final String TESTING = "Testing";
+	public static final String STAGING = "Staging";
+	public static final String PRODUCTION_STRING = "Production";
+}

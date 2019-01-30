@@ -1,0 +1,78 @@
+package api;
+
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import com.google.gson.Gson;
+
+import base.Utility.DeserializeUtility;
+import base.Utility.WebUtility;
+import base.model.DataModel;
+import base.model.ManyDataModels;
+
+import static org.testng.Assert.assertTrue;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+
+public class ApiTesting 
+{	
+	private String _url = "http://localhost:9000/json/mockData.json";
+	private WebUtility _webUtility = new WebUtility();
+	private HttpURLConnection _httpClient;
+	private DeserializeUtility deserializeUtility = new DeserializeUtility();
+	
+	@BeforeTest
+	public void beforetest() {
+		
+	}
+	
+	@Test
+	public void ValidateApplicationDataModelIsCorrect() throws MalformedURLException, IOException  {
+		
+		_httpClient = _webUtility.WebClient(_url, "GET");
+		int statusCode = _httpClient.getResponseCode();
+		
+		assertTrue(statusCode == 200);
+		
+		InputStream response=  _httpClient.getInputStream();
+		//Scanner scanner = new Scanner(response);
+		//StringBuilder jsonToString = new StringBuilder();
+		//while (scanner.hasNext()) {
+		//	jsonToString.append(scanner.next());			
+		//}
+		DataModel dataModel = new DataModel();
+		ManyDataModels manyDataModels = DeserializeManyJsonToModel(response, dataModel);
+		//String jsonDataModel = jsonToString.toString();			
+		//DataModel[] dataModelList = new Gson().fromJson(jsonDataModel, DataModel[].class);
+		
+		//int dataModelCount = dataModelList.length;
+		
+		//assertTrue(dataModelCount == 30);
+	}
+	
+
+	
+	
+	private ManyDataModels DeserializeManyJsonToModel(InputStream response, DataModel dataModel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private ManyDataModels DeserializeManyJsonToModel(InputStream response, DataModel dataModel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@AfterTest
+	public void aftertest() {
+		
+	}
+}

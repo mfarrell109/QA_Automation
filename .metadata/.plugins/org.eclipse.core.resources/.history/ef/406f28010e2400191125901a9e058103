@@ -1,0 +1,10 @@
+package base.model;
+
+public class ManyDataModels {
+
+	private DataModel[] dataModels;
+	
+	public ManyDataModels(DataModel[] model) {
+		this.dataModels = model;
+	}
+}

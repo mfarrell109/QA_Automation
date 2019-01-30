@@ -1,0 +1,103 @@
+package api;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import org.testng.collections.Objects;
+
+import com.google.gson.Gson;
+
+import base.Utility.DeserializeUtility;
+import base.Utility.WebUtility;
+import base.model.DataModel;
+
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+
+
+/* Class created to test the functionality of endpoints of the Projects Dashboard */
+public class ApiTesting 
+{	
+	private String _url = "http://localhost:9000/json/mockData.json";
+	private WebUtility _webUtility;
+	private HttpURLConnection _httpClient;
+	private DeserializeUtility _deserializeUtility;
+	
+	@BeforeClass
+	public void BeforeClass() {
+		System.out.println("\n**************************");
+		System.out.println("ApiTesting Tests Started");
+		System.out.println("****************************\n");
+	}
+	
+	@BeforeTest
+	public void beforetest() {
+		_url = "http://localhost:9000/json/mockData.json";
+		_webUtility = new WebUtility();
+		_deserializeUtility = new DeserializeUtility();
+	}
+	
+	/* Validating the right amount of records exist using a generic deserialization utility helper*/
+	@Test
+	public void ValidateGenericModelCountIsCorrect() throws MalformedURLException, IOException  {
+		
+		_httpClient = _webUtility.WebClient(_url, "GET");
+		int statusCode = _httpClient.getResponseCode();
+		
+		assertTrue(statusCode == 200);
+		
+		InputStream response=  _httpClient.getInputStream();
+		DataModel dataModel = new DataModel();		
+		Object[] object =  (Object[]) _deserializeUtility.DeserializeManyJsonToModel(response, dataModel);
+		
+		int count = 0;
+		for (Object obj : object) {
+			count++;
+		}	
+		
+		assertTrue(count == 30);
+	}
+	
+	/* Validating the right amount of records exist using a generic deserialization utility helper*/
+	@Test
+	public void ValidateDivsionalRecordsCountWithAdministration() throws MalformedURLException, IOException  {
+		
+		_httpClient = _webUtility.WebClient(_url, "GET");
+		int statusCode = _httpClient.getResponseCode();
+		
+		assertTrue(statusCode == 200);
+		
+		InputStream response=  _httpClient.getInputStream();
+		DataModel dataModel = new DataModel();		
+		DataModel[] dataModels =  _deserializeUtility.DeserializeFromDataModel(response, dataModel);
+		
+		int count = 0;
+		for (DataModel dm : dataModels) {
+			if(("Administration".contains(dm.getDivision().toString())))
+					 {				
+				count++;
+			}
+		}	
+		
+		assertTrue(count == 9);
+	}
+
+	@AfterClass
+	public void AfterClass() {
+		System.out.println("\n**************************");
+		System.out.println("Api Testing Tests Finished");
+		System.out.println("****************************\n");
+	}
+}

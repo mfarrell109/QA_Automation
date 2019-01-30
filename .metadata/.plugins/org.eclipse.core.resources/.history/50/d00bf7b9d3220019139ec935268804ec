@@ -1,0 +1,40 @@
+package base;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.openqa.selenium.remote.http.HttpResponse;
+
+/* The purpose of this class is to provide a utility that can provide functionality that 
+ * can test CRUD endpoints with services you maybe working on. Authentication may need to be added
+ * eventually */
+public class WebClientUtility {
+
+		private HttpClient client;
+		private HttpGet getRequest;
+		private HttpPost postRequest;
+		private HttpPut updateRequest;
+		private HttpDelete deleteRequest; 
+		private String url = "";
+			
+		public HttpResponse GetHttpClientResponse(Map<String, String>  headers, String Url) {
+			int headCount = headers.size() - 1;
+			client = HttpClientBuilder.create().build();
+			getRequest = new HttpGet(url);
+			
+			headers.
+
+			
+			HttpResponse httpResponse = new HttpResponse();
+			
+			return httpResponse;
+		}
+}

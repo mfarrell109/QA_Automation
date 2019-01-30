@@ -1,0 +1,53 @@
+package base;
+import java.io.IOException;
+import java.util.Dictionary;
+import java.util.Map;
+
+import org.apache.http.HttpMessage;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+
+import base.model.CustomWebResponseModel;
+
+/* The purpose of this class is to provide a utility that can provide functionality that 
+ * can test CRUD endpoints with services you maybe working on. Authentication may need to be added
+ * eventually */
+public class WebClientUtility {
+
+		public CustomWebResponseModel _customWebResponseModel;
+		
+		private HttpClient _client;
+		private HttpGet _getRequest;
+		public HttpClient HttpWebClient(){
+			return _client = HttpClientBuilder.create().build();
+		}	
+		
+		
+		/* This helper method was created to be able to just rely on getting the HttpResponse from the 
+		 * get request. Feel free to recreate another method and overload it with other parameters you 
+		 * feel you may need
+		 * */
+		public CustomWebResponseModel GetHttpClientResponse( Map<String, String> headers, String Url) throws ClientProtocolException, IOException {
+			CustomWebResponseModel customWebResponseModel = new CustomWebResponseModel();
+			_getRequest = new HttpGet(Url);					
+			for ( Map.Entry<String, String> entry : headers.entrySet() ) 
+			{				
+				_getRequest.addHeader(entry.getKey(), entry.getValue());
+			}	
+			
+			customWebResponseModel.set_getRequest(_getRequest);			
+			//HttpResponse httpResponse= new HttpResponse();
+			HttpClient _client = HttpWebClient();
+			HttpResponse httpResponse = _client.execute(_getRequest);
+			
+			customWebResponseModel.set_httpResponse(httpResponse);
+			return _customWebResponseModel;
+		}
+}

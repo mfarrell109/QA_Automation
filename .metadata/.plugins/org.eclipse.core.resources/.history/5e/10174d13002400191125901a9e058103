@@ -1,0 +1,5 @@
+package base.Utility;
+
+public class DeserializeUtility {
+
+}

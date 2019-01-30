@@ -1,0 +1,8 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<suite name = "QA_AUtomation Suite">
+   <test name = "Selenium test">
+      <classes>
+         <class name = "base.po.ProjectDashBoard_PO_Test" />
+      </classes>
+   </test>
+</suite>

@@ -1,0 +1,12 @@
+package base.model;
+
+import org.testng.collections.Objects;
+
+public class ManyDataModels {
+	
+	private DataModel[] _dataModel;
+	
+	public ManyDataModels(DataModel[] dataModel) {
+		_dataModel= dataModel;
+	}
+}

@@ -1,0 +1,4 @@
+QA_Automation.disabledListeners=true
+QA_Automation.outdir=test-output
+QA_AutomationxmlTemplateFile=${workspace_loc\:QA_Automation/src/main/resources/testng.xml}
+eclipse.preferences.version=1

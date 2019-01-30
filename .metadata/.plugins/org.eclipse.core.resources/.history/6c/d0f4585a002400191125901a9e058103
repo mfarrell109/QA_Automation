@@ -1,0 +1,45 @@
+package base.Utility;
+
+import java.io.InputStream;
+import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
+/* This class is made as a utility to help with deserialization of objects */
+public class DeserializeUtility {
+
+	private Object object = new Object();
+
+	/* Deserialize from Input Stream using json just one object*/
+	public Object DeserializeJsonToModel(InputStream input, Object obj) 
+	{		
+		Scanner scanner = new Scanner(input);
+		StringBuilder jsonToString = new StringBuilder();
+		while (scanner.hasNext()) {
+			jsonToString.append(scanner.next());			
+		}
+				
+		String jsonDataModel = jsonToString.toString();	
+		Object obj = new Object();
+		obj = new Gson().fromJson(jsonDataModel, obj.getClass());
+		return obj;
+	}
+	
+	/* Deserialize from Input Stream using json just with multiple objects */
+	public Object DeserializeJsonToModel(InputStream input, Object[] obj) 
+	{		
+		Scanner scanner = new Scanner(input);
+		StringBuilder jsonToString = new StringBuilder();
+		while (scanner.hasNext()) {
+			jsonToString.append(scanner.next());			
+		}
+				
+		String jsonDataModel = jsonToString.toString();	
+		Object obj = new Object();
+		obj = new Gson().fromJson(jsonDataModel, obj.getClass());
+		return obj;
+	}
+	
+}

@@ -1,0 +1,130 @@
+package base.po;
+import base.BaseConfig;
+import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeClass;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterTest;
+import base.po.ProjectDashboard_PO;
+
+/* This class only tests elements from the ProjectDashBoard_PO class
+ * Each test needs to be documented on what exactly is being tested. Also feel
+ * free to insert tests that only are going to work by called elements dynamically */
+public class ProjectDashBoard_PO_Test
+{
+
+	public WebDriver _driver;
+	public WebDriverWait _wait;
+	public ProjectDashboard_PO ProjectDashboard_PO;
+	private final String _base_url = "http://localhost:9000/";
+	private final String _proj = "Proj_Name";
+	
+	BaseConfig newBaseConfig = BaseConfig(String env, String user, String Domain, String Authentication, String Browser);
+	
+  @BeforeClass
+  public void beforeClass() {
+		System.out.println("\n**************************");
+		System.out.println("Page Factory Tests Started");
+		System.out.println("****************************");
+  }	
+  
+  @BeforeTest
+  public void beforeTest() 
+  {	  
+	  //Logging which can be done in TestNG
+	  _driver = new ChromeDriver();
+	  _driver.navigate().to(_base_url);
+	  ProjectDashboard_PO = PageFactory.initElements(_driver, ProjectDashboard_PO.class);	  
+	  _wait = new WebDriverWait(_driver, 10);
+	  _wait.until(ExpectedConditions.visibilityOf(ProjectDashboard_PO.Proj_Name));
+  }
+
+  /* This test validates the project dashboard name is correct and is visible */
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateProjectDashBoardsName() {
+	  
+	  Assert.assertTrue(ProjectDashboard_PO.Proj_Name.isDisplayed());	
+	  Assert.assertEquals(ProjectDashboard_PO.Proj_Name.getText(), "Project Dashboard");
+  }
+  
+  /* This test involves changing the only values which can be manipulated
+   * in Tagtune. This involves changes Project Owner, Budget and Status.
+   * Once values have been changed then values have been changes the validate
+   * that they are correct */   
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateDataModelCorrectAfterChangingDataModelValues() {
+	  
+	  ProjectDashboard_PO.TT_Proj_Owner_Edit_Button.click();
+	  ProjectDashboard_PO.TT_Proj_Owner_TextBox.click();
+	  ProjectDashboard_PO.TT_Proj_Owner_TextBox.clear();
+	  ProjectDashboard_PO.TT_Proj_Owner_TextBox.sendKeys("Test User");
+	  
+	  /* using javascript to click on hidden element */
+	  JavascriptExecutor js =  (JavascriptExecutor)_driver;	 
+	  js.executeScript("document.getElementsByClassName('po_edit_icon')[0].click();"); 
+	  WebElement e = _driver.findElement(By.xpath("//span[contains(text(), 'Test User')]"));
+	  Boolean result = e.isDisplayed();
+	  Assert.assertTrue(result);
+  }
+
+  /* Testing accounting summation from the project dashboard */
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateAccountingSummationAreCorrect() {
+	  
+	  java.util.List<WebElement> ele =  _driver.findElements(By.xpath("//span[contains(text(), 'Accounting')]"));
+	  int count = ele.size();  
+	  
+	  Assert.assertTrue(count == 4);
+  }
+  
+  /* Testing Sales summation from the project dashboard */
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateSalesSummationAreCorrect() {
+	  
+	  java.util.List<WebElement> ele =  _driver.findElements(By.xpath("//span[contains(text(), 'Sales')]"));
+	  int count = ele.size();  
+	  
+	  Assert.assertTrue(count == 5);
+  }
+  
+  /* Testing More Info Buttons summation from the project dashboard */
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateAllInfoButtonsExist() {
+	  
+	  java.util.List<WebElement> ele =  _driver.findElements(By.xpath("//span[contains(text(), 'More Info')]"));
+	  int numberDisplayed = 0;
+	  for(WebElement elements: ele) {		  
+		  elements.click();
+		  Boolean displayed = elements.isDisplayed();
+		  if(displayed) {
+			  numberDisplayed++;
+		  }
+	  }
+	  
+	  Assert.assertTrue(numberDisplayed == 30);
+  }
+  
+  /* Annotations to use after test */
+  @AfterTest
+  public void afterTest() {
+	  _driver.close();
+  }
+  
+  @AfterClass
+  public void afterClass() {
+	  
+		System.out.println("**************************");
+		System.out.println("Page Factory Tests Ended");
+		System.out.println("****************************\n");
+  }
+
+}

@@ -1,0 +1,11 @@
+package base;
+
+import com.sun.org.apache.bcel.internal.Const;
+
+/* The purpose of this document is to be pointed and configured to test from 
+ * one envrionment to the next by just changing a few parameters in the
+ * the BaseConfig.class */
+public class BaseConfig {
+	 
+	public BaseConfig(String env, String user, String Domain, String Authentication);
+}

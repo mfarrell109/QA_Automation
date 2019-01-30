@@ -1,0 +1,11 @@
+package base.model;
+
+public class ManyDataModels {
+
+	private Object Object;
+	
+	public ManyDataModels(Object[] Obj) {
+		this.Object = Obj;
+	}
+	
+}

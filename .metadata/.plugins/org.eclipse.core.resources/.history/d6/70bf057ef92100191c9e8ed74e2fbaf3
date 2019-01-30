@@ -1,0 +1,55 @@
+package base.po;
+
+import org.testng.annotations.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterSuite;
+
+public class ProjectDashBoard_PO_Test {
+
+	public WebDriver driver;
+  /* Annotations to use before test */
+  @BeforeMethod
+  public void beforeMethod() {
+  }
+  @BeforeTest
+  public void beforeTest() {
+	  driver = new FirefoxDriver();
+  }
+  @BeforeSuite
+  public void beforeSuite() {
+  }
+  @BeforeClass
+  public void beforeClass() {
+  }
+  
+  @Test(priority=1)
+  public void ValidateElementsExist() {
+	  driver.get("https://docs.mendix.com/howto/testing/create-automated-tests-with-testng");
+  
+  }
+
+ 
+  /* Annotations to use after test */
+  @AfterMethod
+  public void afterMethod() {
+  }
+  @AfterClass
+  public void afterClass() {
+  }
+  @AfterTest
+  public void afterTest() {
+	  driver.close();
+  }
+  @AfterSuite
+  public void afterSuite() {
+  }
+
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="QA_AUtomation Suite" duration-ms="5428" started-at="2019-01-28T04:55:40Z" finished-at="2019-01-28T04:55:46Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="5428" started-at="2019-01-28T04:55:40Z" finished-at="2019-01-28T04:55:46Z">
+      <class name="base.po.ProjectDashBoard_PO_Test">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="beforeSuite" is-config="true" duration-ms="18" started-at="2019-01-28T04:55:40Z" finished-at="2019-01-28T04:55:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="beforeTest" is-config="true" duration-ms="5219" started-at="2019-01-28T04:55:40Z" finished-at="2019-01-28T04:55:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="beforeClass()[pri:0, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="beforeClass" is-config="true" duration-ms="0" started-at="2019-01-28T04:55:46Z" finished-at="2019-01-28T04:55:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method status="PASS" signature="ValidateDataModelCorrectAfterChangingDataModelValues()[pri:1, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="ValidateDataModelCorrectAfterChangingDataModelValues" duration-ms="44" started-at="2019-01-28T04:55:46Z" finished-at="2019-01-28T04:55:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ValidateDataModelCorrectAfterChangingDataModelValues -->
+        <test-method status="PASS" signature="ValidateProjectDashBoardsName()[pri:1, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="ValidateProjectDashBoardsName" duration-ms="70" started-at="2019-01-28T04:55:46Z" finished-at="2019-01-28T04:55:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ValidateProjectDashBoardsName -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="afterTest" is-config="true" duration-ms="63" started-at="2019-01-28T04:55:46Z" finished-at="2019-01-28T04:55:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:base.po.ProjectDashBoard_PO_Test@1753acfe]" name="afterSuite" is-config="true" duration-ms="0" started-at="2019-01-28T04:55:46Z" finished-at="2019-01-28T04:55:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- base.po.ProjectDashBoard_PO_Test -->
+    </test> <!-- Default test -->
+  </suite> <!-- QA_AUtomation Suite -->
+</testng-results>

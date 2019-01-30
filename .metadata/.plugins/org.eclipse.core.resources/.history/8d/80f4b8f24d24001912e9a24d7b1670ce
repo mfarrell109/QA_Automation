@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name = "QA_AUtomation Suite">
+   <listeners>
+      <listener class-name = "base.po.AutomationListener"/>
+   </listeners>
+
+     <classes>
+        <class name = "test.base.po.ProjectDashBoard_PO_Test" />
+        <class name = "test.api.ApiTesting" /
+     </classes>
+</suite>

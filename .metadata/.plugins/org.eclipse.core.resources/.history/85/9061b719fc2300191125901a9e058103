@@ -1,0 +1,71 @@
+package api;
+
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import com.google.gson.Gson;
+
+import base.Utility.WebUtility;
+import base.model.DataModel;
+import static org.testng.Assert.assertTrue;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.util.Scanner;
+
+public class ApiTesting 
+{	
+	private String _url = "http://localhost:9000/json/mockData.json";
+	private WebUtility _webUtility = new WebUtility();
+	
+	@BeforeTest
+	public void beforetest() {
+		
+	}
+	
+	@Test
+	public void ValidateApplicationDataModelIsCorrect() throws MalformedURLException, IOException  {
+		
+		HttpURLConnection httpClient = (HttpURLConnection) 
+                URI.create(
+                    new StringBuilder(_url)
+                .toString())
+                .toURL()
+                .openConnection();
+		httpClient.setRequestMethod("GET");
+		
+		int statusCode = httpClient.getResponseCode();
+		
+		assertTrue(statusCode == 200);
+		
+		InputStream response=  httpClient.getInputStream();
+		Scanner scanner = new Scanner(response);
+		StringBuilder jsonToString = new StringBuilder();
+		while (scanner.hasNext()) {
+			jsonToString.append(scanner.next());			
+		}
+		
+		String jsonDataModel = jsonToString.toString();	
+		DataModel dataModel = new DataModel();
+		DataModel[] dataModelList = new Gson().fromJson(jsonDataModel, DataModel[].class);
+		
+		int dataModelCount = dataModelList.length;
+		
+		assertTrue(dataModelCount == 30);
+	}
+	
+	@Test
+	public void ValidateApplicationDataModelIsCorrectUsingClient() throws MalformedURLException, IOException  {
+		
+	
+	}
+	
+	
+	
+	@AfterTest
+	public void aftertest() {
+		
+	}
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name = "QA_AUtomation Suite">
+   <listeners>
+      <listener class-name = "base.po.AutomationListener"/>
+   </listeners>
+ <!-- 
+ Add your classes into this document where all your tests exist 
+ QA_Automation Suite should be ran in run configurations
+ Then select TestNG and from there you can choose to run a Suite.
+ The path of this document should be located at bin/main/resources/testng.xml
+ -->
+   <test name = "Integration Tests">
+      <classes>
+         <class name = "base.po.ProjectDashBoard_PO_Test" />
+         <class name = "api.ApiTesting" />
+      </classes>
+   </test>
+</suite>

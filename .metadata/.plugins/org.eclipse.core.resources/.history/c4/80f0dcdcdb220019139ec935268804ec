@@ -1,0 +1,55 @@
+package base;
+import java.util.Dictionary;
+import java.util.Map;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.openqa.selenium.remote.http.HttpResponse;
+
+/* The purpose of this class is to provide a utility that can provide functionality that 
+ * can test CRUD endpoints with services you maybe working on. Authentication may need to be added
+ * eventually */
+public class WebClientUtility {
+
+		private HttpClient _client;
+		private HttpGet _getRequest;
+		private HttpPost _postRequest;
+		private HttpPut _putRequest;
+		private HttpDelete _deleteRequest; 
+		private String _url = "";		
+		
+		public HttpClient HttpWebClient(){
+			return _client = HttpClientBuilder.create().build();
+		}
+		
+		public HttpGet getRequest() {
+			return _getRequest;
+		}
+		
+		public HttpPut putRequest() {
+			return _putRequest;
+		}
+		
+		
+		
+		/* This helper method was created to be able to just rely on getting the HttpResponse from the 
+		 * get request. Feel free to recreate another method and overload it with other parameters you 
+		 * feel you may need
+		 * */
+		public HttpResponse GetHttpClientResponse( Map<String, String> headers, String Url) {
+			_getRequest = new HttpGet(_url);
+			
+			for ( Map.Entry<String, String> entry : headers.entrySet() ) {
+				_getRequest.addHeader(entry.getKey(), entry.getValue());
+			}			
+			
+			HttpResponse httpResponse = new HttpResponse();
+			
+			return httpResponse;
+		}
+}

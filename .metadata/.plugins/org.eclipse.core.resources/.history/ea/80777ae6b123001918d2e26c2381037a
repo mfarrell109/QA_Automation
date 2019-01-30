@@ -1,0 +1,40 @@
+package base.model;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+
+public class CustomWebResponseModel {
+
+	private HttpResponse _httpResponse;
+	
+	/*
+	public HttpResponse get_httpResponse() {
+		return _httpResponse;
+	}
+	public void set_httpResponse(HttpResponse _httpResponse) {
+		this._httpResponse = _httpResponse;
+	}
+	public HttpGet get_getRequest() {
+		return _getRequest;
+	}
+	public void set_getRequest(HttpGet _getRequest) {
+		this._getRequest = _getRequest;
+	}
+	public HttpPost get_postRequest() {
+		return _postRequest;
+	}
+	public void set_postRequest(HttpPost _postRequest) {
+		this._postRequest = _postRequest;
+	}
+	public HttpPut get_putRequest() {
+		return _putRequest;
+	}
+	public void set_putRequest(HttpPut _putRequest) {
+		this._putRequest = _putRequest;
+	}
+
+	*/
+}

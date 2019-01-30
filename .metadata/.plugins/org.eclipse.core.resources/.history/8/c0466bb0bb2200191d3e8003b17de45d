@@ -1,0 +1,12 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<suite name = "QA_AUtomation Suite">
+   <listeners>
+      <listener class-name = AutomationListener/>
+   </listeners>
+
+   <test name = "Selenium test">
+      <classes>
+         <class name = "ProjectDashBoard_PO_Test" />
+      </classes>
+   </test>
+</suite>

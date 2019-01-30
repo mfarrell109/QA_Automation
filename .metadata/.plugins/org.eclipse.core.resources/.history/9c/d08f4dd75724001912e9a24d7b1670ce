@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name = "QA_AUtomation Suite">
+
+   <test name = "Selenium Tests">
+      <classes>
+         <class name = "base.po.ProjectDashBoard_PO_Test" />
+         <class name = "api.ApiTesting" />
+      </classes>
+   </test>
+</suite>
