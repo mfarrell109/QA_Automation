@@ -2,9 +2,18 @@ package base.po;
 import base.BaseConfig;
 import org.testng.annotations.Test;
 
+import com.sun.net.httpserver.Authenticator.Result;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+import java.util.function.Function;
+
 import javax.swing.text.StyleConstants.CharacterConstants;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,11 +22,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.AfterTest;
 import base.po.ProjectDashboard_PO;
+import bsh.Variable;
 import base.model.Constants;
 
 /* This class only tests elements from the ProjectDashBoard_PO class
@@ -25,7 +37,6 @@ import base.model.Constants;
  * free to insert tests that only are going to work by called elements dynamically */
 public class ProjectDashBoard_PO_Test
 {
-
 	public WebDriver _driver;
 	public WebDriverWait _wait;
 	public ProjectDashboard_PO ProjectDashboard_PO;
@@ -46,23 +57,53 @@ public class ProjectDashBoard_PO_Test
 		System.out.println("****************************");
   }	
   
-  @BeforeTest
+  @BeforeMethod
   public void beforeTest() 
   {	  
 	  //Logging which can be done in TestNG
 	  _driver = new ChromeDriver();
 	  _driver.navigate().to(_base_url);
 	  ProjectDashboard_PO = PageFactory.initElements(_driver, ProjectDashboard_PO.class);	  
-	  _wait = new WebDriverWait(_driver, 10);
-	  _wait.until(ExpectedConditions.visibilityOf(ProjectDashboard_PO.Proj_Name));
-	  
-
+	  _wait = new WebDriverWait(_driver, 20);
+	  _wait.until(ExpectedConditions.visibilityOf(ProjectDashboard_PO.Proj_Name));	  
   }
 
+  /* Validate Tagtune budget text value from Filter*/
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateSearchFilterBudget() {
+	  
+	    _wait.until(ExpectedConditions.elementToBeClickable(ProjectDashboard_PO.BlogNation_Budget));	    
+	    ProjectDashboard_PO.SearchFilter.click();
+	    ProjectDashboard_PO.SearchFilter.sendKeys("20614.14");   
+	    _wait.until(ExpectedConditions.textToBePresentInElement(ProjectDashboard_PO.BlogNation_Budget, "20,614.14")); 
+	    String blogs =  ProjectDashboard_PO.BlogNation_Budget.getText();
+	    
+	    Assert.assertTrue(blogs.contains("$20,614.14"));
+  }
+  
+  /* Validate filter using only partial text a division*/
+  @Test(groups = { "Selenium Tests" })
+  public void ValidateFilterPartialText() {
+	  
+	    _wait.until(ExpectedConditions.elementToBeClickable(ProjectDashboard_PO.BlogNation_Budget));	    
+	    ProjectDashboard_PO.SearchFilter.click();
+	    ProjectDashboard_PO.SearchFilter.sendKeys("prod"); 
+	    
+	    List<WebElement> ProductionList= _wait.until(ExpectedConditions.visibilityOfAllElements(ProjectDashboard_PO.ProductionDivisions));
+	    Assert.assertTrue(ProductionList.size() == 5);
+	    
+	    ProjectDashboard_PO.SearchFilter.clear();
+	    ProjectDashboard_PO.SearchFilter.sendKeys("ew");
+	    
+	    List<WebElement> NewList= _wait.until(ExpectedConditions.visibilityOfAllElements(ProjectDashboard_PO.NewDivisions));
+	    Assert.assertTrue(NewList.size() == 4);
+  }
+  
   /* This test validates the project dashboard name is correct and is visible */
   @Test(groups = { "Selenium Tests" })
   public void ValidateProjectDashBoardsName() {
 	  
+	  _wait.until(ExpectedConditions.visibilityOf(ProjectDashboard_PO.Proj_Name));
 	  Assert.assertTrue(ProjectDashboard_PO.Proj_Name.isDisplayed());	
 	  Assert.assertEquals(ProjectDashboard_PO.Proj_Name.getText(), "Project Dashboard");
   }
@@ -74,6 +115,7 @@ public class ProjectDashBoard_PO_Test
   @Test(groups = { "Selenium Tests" })
   public void ValidateDataModelCorrectAfterChangingDataModelValues() {
 	  
+	  _wait.until(ExpectedConditions.elementToBeClickable(ProjectDashboard_PO.TT_Proj_Owner_Edit_Button));
 	  ProjectDashboard_PO.TT_Proj_Owner_Edit_Button.click();
 	  ProjectDashboard_PO.TT_Proj_Owner_TextBox.click();
 	  ProjectDashboard_PO.TT_Proj_Owner_TextBox.clear();
@@ -91,14 +133,31 @@ public class ProjectDashBoard_PO_Test
   @Test(groups = { "Selenium Tests" })
   public void ValidateAccountingSummationAreCorrect() {
 	  
-	  java.util.List<WebElement> ele =  _driver.findElements(By.xpath("//span[contains(text(), 'Accounting')]"));
-	  int count = ele.size();  
+	  ProjectDashboard_PO.SearchFilter.click();
+	  ProjectDashboard_PO.SearchFilter.sendKeys("Accounting");	    
+	  List<WebElement> accountingList = _wait.until(ExpectedConditions.visibilityOfAllElements(ProjectDashboard_PO.AccountingDivisions));
+	  String size = String.valueOf(accountingList.size());	 
+	  String accountCalc = ProjectDashboard_PO.ST_RD_Accounting_Calc.getText();
 	  
-	  Assert.assertTrue(count == 4);
+	  /* Verifying the summation value is equal to amount of accounting divisions*/
+	  Assert.assertTrue(accountCalc.contains(size));	  
+	  
+	  /* The amount of record cards that will increment */
+	  int counter = 0;
+	  List<WebElement> cards= ProjectDashboard_PO.RecordCards;
+		
+	  for (WebElement card : cards) {
+		 _wait.until(ExpectedConditions.visibilityOf(card)); 
+		 if(card.isDisplayed()) {
+			 counter++;
+		 }		 
+	  } 
+      	  
+	  Assert.assertTrue(accountCalc.contains(String.valueOf(counter)));	  
   }
   
   /* Testing Sales summation from the project dashboard */
-  @Test(groups = { "Selenium Tests" })
+  //@Test(groups = { "Selenium Tests" })
   public void ValidateSalesSummationAreCorrect() {
 	  
 	  java.util.List<WebElement> ele =  _driver.findElements(By.xpath("//span[contains(text(), 'Sales')]"));
@@ -108,7 +167,7 @@ public class ProjectDashBoard_PO_Test
   }
   
   /* Testing More Info Buttons summation from the project dashboard */
-  @Test(groups = { "Selenium Tests" })
+  //@Test(groups = { "Selenium Tests" })
   public void ValidateAllInfoButtonsExist() {
 	  
 	  java.util.List<WebElement> ele =  _driver.findElements(By.xpath("//span[contains(text(), 'More Info')]"));
@@ -119,15 +178,16 @@ public class ProjectDashBoard_PO_Test
 		  if(displayed) {
 			  numberDisplayed++;
 		  }
-	  }
+	  }  
 	  
 	  Assert.assertTrue(numberDisplayed == 30);
   }
+
   
   /* Annotations to use after test */
-  @AfterTest
+  @AfterMethod
   public void afterTest() {
-	  _driver.close();
+	  _driver.quit();
   }
   
   @AfterClass
